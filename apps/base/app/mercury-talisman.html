@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水逆退散符箓 - 量子占星戒指App</title>
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        .talisman-container {
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .talisman-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .tab-item {
+            padding: 10px 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-item.active {
+            color: var(--accent);
+        }
+        
+        .tab-item.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .talisman-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .talisman-card {
+            background: rgba(30, 30, 60, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .talisman-card:hover, .talisman-card:active {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+        
+        .talisman-card-content {
+            padding: 12px;
+        }
+        
+        .talisman-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            background-color: #FFAA00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .talisman-image.variant-red {
+            background-color: #FFAA00;
+        }
+        
+        .talisman-image.variant-beige {
+            background-color: #F5ECD7;
+        }
+        
+        .talisman-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .talisman-author {
+            font-size: 0.75rem;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+        }
+        
+        .talisman-author i {
+            margin-right: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .talisman-likes {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-medium);
+        }
+        
+        .talisman-likes i {
+            margin-right: 4px;
+            color: var(--accent);
+        }
+        
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .template-item {
+            background: rgba(30, 30, 60, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .template-item.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+        
+        .template-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            background-color: #FFAA00;
+        }
+        
+        .template-image.template-1 {
+            background-color: #FFAA00;
+        }
+        
+        .template-image.template-2 {
+            background-color: #F5ECD7;
+        }
+        
+        .template-image.template-3 {
+            background-color: #FFAA00;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--text-medium);
+        }
+        
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .generate-btn:hover, .generate-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        .generate-btn i {
+            margin-right: 8px;
+        }
+        
+        .result-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .result-modal.show {
+            display: flex;
+        }
+        
+        .result-content {
+            background: var(--bg-medium);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 320px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+        
+        .result-header {
+            padding: 16px;
+            background: rgba(138, 43, 226, 0.1);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            text-align: center;
+        }
+        
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .result-body {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .result-talisman {
+            width: 200px;
+            height: 200px;
+            background-color: #FFAA00;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .result-footer {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .result-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-close {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+        
+        .btn-share {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+        
+        .btn-close:hover, .btn-share:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-share i, .btn-close i {
+            margin-right: 6px;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-overlay.show {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .talisman-effect {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            margin-top: 6px;
+        }
+        
+        .talisman-effect span {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- iOS Status Bar -->
+    <div class="ios-status-bar">
+        <div class="status-bar-content">
+            <span class="time">20:42</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="stars-bg"></div>
+        
+        <div class="app-content">
+            <header class="app-header">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="app-title">水逆退散符箓</h1>
+                <div class="spacer" style="width: 24px;"></div>
+            </header>
+            
+            <div class="talisman-container">
+                <div class="talisman-tabs">
+                    <div class="tab-item active" data-tab="community">社区符箓</div>
+                    <div class="tab-item" data-tab="create">制作专属符箓</div>
+                </div>
+                
+                <div class="tab-content active" id="community-tab">
+                    <div class="talisman-grid">
+                        <div class="talisman-card">
+                            <div class="talisman-image variant-red">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <text x="50" y="50" font-family="Noto Serif SC" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <path d="M25,70 Q50,60 75,70" stroke="black" fill="none" stroke-width="2"/>
+                                    <circle cx="25" cy="70" r="3" fill="black"/>
+                                    <circle cx="75" cy="70" r="3" fill="black"/>
+                                </svg>
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">水逆守护符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>星辰法师</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>退散负能量，化解水逆影响</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>128</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="talisman-card">
+                            <div class="talisman-image variant-beige">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="16" fill="black" text-anchor="middle" dominant-baseline="middle">顺行</text>
+                                    <text x="30" y="60" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <text x="70" y="60" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">无灾无难</text>
+                                    <path d="M30,70 L70,70" stroke="red" stroke-width="2"/>
+                                    <path d="M40,65 L40,75" stroke="red" stroke-width="2"/>
+                                    <path d="M60,65 L60,75" stroke="red" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">太岁平安符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>云游道人</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>平安顺遂，水逆不侵</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>96</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="talisman-card">
+                            <div class="talisman-image variant-red">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="30" fill="none" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">开运</text>
+                                    <text x="50" y="60" font-family="Noto Serif SC" font-size="12" fill="red" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <path d="M30,50 L70,50" stroke="black" stroke-width="1"/>
+                                    <path d="M50,30 L50,70" stroke="black" stroke-width="1"/>
+                                </svg>
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">玄易太极符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>太极仙人</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>平衡阴阳，驱散水逆煞气</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>75</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="talisman-card">
+                            <div class="talisman-image variant-beige">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <text x="50" y="35" font-family="Noto Serif SC" font-size="16" fill="red" text-anchor="middle" dominant-baseline="middle">逢凶化吉</text>
+                                    <path d="M30,45 Q50,40 70,45" stroke="black" fill="none" stroke-width="1"/>
+                                    <text x="50" y="55" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">水星不逆</text>
+                                    <text x="50" y="70" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">万事如意</text>
+                                </svg>
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">逢凶化吉符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>吉星高照</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>逢凶化吉，水逆期间顺风顺水</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>64</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-fire"></i>
+                        <span>热门符箓</span>
+                    </div>
+                    
+                    <div class="talisman-grid">
+                        <div class="talisman-card">
+                            <div class="talisman-image" style="background-image: url(/a/f8d63a62-a702-475f-b21f-51e472108b3f)">
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">水逆驱散黄符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>道法自然</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>驱散水逆，招来好运</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>243</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="talisman-card">
+                            <div class="talisman-image" style="background-image: url(/a/bbe2d1d9-c73a-48a0-87d6-7fb4a5e6faa9)">
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">趣味水逆符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>无忧道人</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>趣味化解水逆，带来好心情</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>198</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="talisman-card">
+                            <div class="talisman-image" style="background-image: url(/a/b573a2db-5697-48cd-90ee-76854deda4ec)">
+                            </div>
+                            <div class="talisman-card-content">
+                                <div class="talisman-title">八卦开运符</div>
+                                <div class="talisman-author">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>太极生两仪</span>
+                                </div>
+                                <div class="talisman-effect">功效：<span>开运转运，水逆退散</span></div>
+                                <div class="talisman-likes">
+                                    <i class="fas fa-heart"></i>
+                                    <span>152</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="create-tab">
+                    <div class="section-title">
+                        <i class="fas fa-magic"></i>
+                        <span>选择符箓模板</span>
+                    </div>
+                    
+                    <div class="template-grid">
+                        <div class="template-item active" data-template="1">
+                            <div class="template-image template-1">
+                                <svg width="70" height="70" viewBox="0 0 100 100">
+                                    <text x="50" y="50" font-family="Noto Serif SC" font-size="20" fill="black" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <path d="M25,70 Q50,60 75,70" stroke="black" fill="none" stroke-width="2"/>
+                                    <circle cx="25" cy="70" r="3" fill="black"/>
+                                    <circle cx="75" cy="70" r="3" fill="black"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="template-item" data-template="2">
+                            <div class="template-image template-2">
+                                <svg width="70" height="70" viewBox="0 0 100 100">
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="16" fill="black" text-anchor="middle" dominant-baseline="middle">顺行</text>
+                                    <text x="30" y="60" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <text x="70" y="60" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">无灾无难</text>
+                                    <path d="M30,70 L70,70" stroke="red" stroke-width="2"/>
+                                    <path d="M40,65 L40,75" stroke="red" stroke-width="2"/>
+                                    <path d="M60,65 L60,75" stroke="red" stroke-width="2"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="template-item" data-template="3">
+                            <div class="template-image template-3">
+                                <svg width="70" height="70" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="30" fill="none" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">开运</text>
+                                    <text x="50" y="60" font-family="Noto Serif SC" font-size="12" fill="red" text-anchor="middle" dominant-baseline="middle">水逆退散</text>
+                                    <path d="M30,50 L70,50" stroke="black" stroke-width="1"/>
+                                    <path d="M50,30 L50,70" stroke="black" stroke-width="1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">符箓名称</label>
+                        <input type="text" class="form-input" id="talisman-name" placeholder="例如：我的专属水逆退散符" value="我的专属水逆退散符">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">主要内容</label>
+                        <input type="text" class="form-input" id="talisman-main-text" placeholder="例如：水逆退散" value="水逆退散">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">辅助内容（可选）</label>
+                        <input type="text" class="form-input" id="talisman-sub-text" placeholder="例如：万事顺利" value="万事顺利">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">选择颜色</label>
+                        <div class="flex gap-2">
+                            <div class="w-8 h-8 bg-yellow-500 rounded-full border-2 border-white cursor-pointer color-option active" data-color="yellow"></div>
+                            <div class="w-8 h-8 bg-red-500 rounded-full border-2 border-transparent cursor-pointer color-option" data-color="red"></div>
+                            <div class="w-8 h-8 bg-purple-500 rounded-full border-2 border-transparent cursor-pointer color-option" data-color="purple"></div>
+                            <div class="w-8 h-8 bg-blue-500 rounded-full border-2 border-transparent cursor-pointer color-option" data-color="blue"></div>
+                            <div class="w-8 h-8 bg-green-500 rounded-full border-2 border-transparent cursor-pointer color-option" data-color="green"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="generate-btn" id="generate-btn">
+                        <i class="fas fa-magic"></i>
+                        <span>生成专属符箓</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Bottom Navigation Bar -->
+        <div class="ios-tab-bar">
+            <div class="tab-item" onclick="location.href='index.html'">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item active">
+                <i class="fas fa-star"></i>
+                <span>功能</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-history"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">正在生成专属符箓...</div>
+    </div>
+    
+    <!-- Result Modal -->
+    <div class="result-modal" id="result-modal">
+        <div class="result-content">
+            <div class="result-header">
+                <h2 class="result-title">符箓已生成</h2>
+            </div>
+            <div class="result-body">
+                <div class="result-talisman" id="result-talisman">
+                    <!-- Generated talisman will be displayed here -->
+                </div>
+                <p>您的专属符箓已成功生成</p>
+                <p class="text-sm text-gray-400">* 效果纯属娱乐，请勿当真</p>
+            </div>
+            <div class="result-footer">
+                <button class="result-btn btn-close" id="close-result">
+                    <i class="fas fa-times"></i>
+                    <span>关闭</span>
+                </button>
+                <button class="result-btn btn-share">
+                    <i class="fas fa-share-alt"></i>
+                    <span>分享</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update the time in the status bar
+            updateStatusBarTime();
+            
+            // Tab switching
+            const tabItems = document.querySelectorAll('.tab-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabItems.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabItems.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active content
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Template selection
+            const templateItems = document.querySelectorAll('.template-item');
+            let selectedTemplate = "1"; // Default template
+            
+            templateItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    templateItems.forEach(temp => temp.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedTemplate = this.getAttribute('data-template');
+                });
+            });
+            
+            // Color selection
+            const colorOptions = document.querySelectorAll('.color-option');
+            let selectedColor = "yellow"; // Default color
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('active'));
+                    colorOptions.forEach(opt => opt.classList.remove('border-white'));
+                    colorOptions.forEach(opt => opt.classList.add('border-transparent'));
+                    this.classList.add('active');
+                    this.classList.remove('border-transparent');
+                    this.classList.add('border-white');
+                    selectedColor = this.getAttribute('data-color');
+                });
+            });
+            
+            // Generate button
+            const generateBtn = document.getElementById('generate-btn');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const resultModal = document.getElementById('result-modal');
+            const resultTalisman = document.getElementById('result-talisman');
+            const closeResultBtn = document.getElementById('close-result');
+            
+            generateBtn.addEventListener('click', function() {
+                const talismanName = document.getElementById('talisman-name').value || "专属水逆退散符";
+                const mainText = document.getElementById('talisman-main-text').value || "水逆退散";
+                const subText = document.getElementById('talisman-sub-text').value || "万事顺利";
+                
+                // Show loading overlay
+                loadingOverlay.classList.add('show');
+                
+                // Simulate generation process
+                setTimeout(() => {
+                    // Hide loading overlay
+                    loadingOverlay.classList.remove('show');
+                    
+                    // Generate talisman based on template and color
+                    let backgroundColor, svgContent;
+                    
+                    // Set background color based on selection
+                    switch(selectedColor) {
+                        case "red":
+                            backgroundColor = "#FF5555";
+                            break;
+                        case "purple":
+                            backgroundColor = "#AA55FF";
+                            break;
+                        case "blue":
+                            backgroundColor = "#5555FF";
+                            break;
+                        case "green":
+                            backgroundColor = "#55AA55";
+                            break;
+                        default: // yellow
+                            backgroundColor = "#FFAA00";
+                    }
+                    
+                    // Generate SVG content based on template
+                    switch(selectedTemplate) {
+                        case "2":
+                            svgContent = `
+                                <svg width="160" height="160" viewBox="0 0 100 100">
+                                    <text x="50" y="35" font-family="Noto Serif SC" font-size="16" fill="black" text-anchor="middle" dominant-baseline="middle">${subText}</text>
+                                    <text x="50" y="55" font-family="Noto Serif SC" font-size="20" fill="red" text-anchor="middle" dominant-baseline="middle">${mainText}</text>
+                                    <path d="M30,70 L70,70" stroke="red" stroke-width="2"/>
+                                    <path d="M40,65 L40,75" stroke="red" stroke-width="2"/>
+                                    <path d="M60,65 L60,75" stroke="red" stroke-width="2"/>
+                                    <text x="50" y="85" font-family="Noto Serif SC" font-size="10" fill="black" text-anchor="middle" dominant-baseline="middle">今日开始 万事顺遂</text>
+                                </svg>
+                            `;
+                            break;
+                        case "3":
+                            svgContent = `
+                                <svg width="160" height="160" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="35" fill="none" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="12" fill="black" text-anchor="middle" dominant-baseline="middle">${subText}</text>
+                                    <text x="50" y="60" font-family="Noto Serif SC" font-size="18" fill="red" text-anchor="middle" dominant-baseline="middle">${mainText}</text>
+                                    <path d="M30,50 L70,50" stroke="black" stroke-width="1"/>
+                                    <path d="M50,30 L50,70" stroke="black" stroke-width="1"/>
+                                    <circle cx="50" cy="50" r="5" fill="red"/>
+                                </svg>
+                            `;
+                            break;
+                        default: // template 1
+                            svgContent = `
+                                <svg width="160" height="160" viewBox="0 0 100 100">
+                                    <text x="50" y="40" font-family="Noto Serif SC" font-size="24" fill="black" text-anchor="middle" dominant-baseline="middle">${mainText}</text>
+                                    <path d="M25,60 Q50,50 75,60" stroke="black" fill="none" stroke-width="2"/>
+                                    <circle cx="25" cy="60" r="3" fill="black"/>
+                                    <circle cx="75" cy="60" r="3" fill="black"/>
+                                    <text x="50" y="75" font-family="Noto Serif SC" font-size="14" fill="black" text-anchor="middle" dominant-baseline="middle">${subText}</text>
+                                </svg>
+                            `;
+                    }
+                    
+                    // Update result talisman
+                    resultTalisman.style.backgroundColor = backgroundColor;
+                    resultTalisman.innerHTML = svgContent;
+                    
+                    // Show result modal
+                    resultModal.classList.add('show');
+                }, 2000);
+            });
+            
+            // Close result modal
+            closeResultBtn.addEventListener('click', function() {
+                resultModal.classList.remove('show');
+            });
+            
+            // Also close when clicking outside the modal content
+            resultModal.addEventListener('click', function(e) {
+                if (e.target === resultModal) {
+                    resultModal.classList.remove('show');
+                }
+            });
+        });
+        
+        // Update the time in the status bar
+        function updateStatusBarTime() {
+            const timeElement = document.querySelector('.time');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}`;
+                
+                // Update every minute
+                setTimeout(updateStatusBarTime, 60000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,132 +1,869 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="A mobile simulator designed to demonstrate mobile interface design.">
-  <meta name="keywords" content="mobile, simulator, mobile design, mobile app">
-  <meta name="author" content="Your Name or Company">
-  <meta http-equiv="Content-Language" content="en">
-
-  <!-- Canonical Link -->
-  <link rel="canonical" href="https://www.yourwebsite.com/pc-simulator" />
-
-  <!-- Open Graph for Social Media -->
-  <meta property="og:title" content="PC Simulator">
-  <meta property="og:description" content="A mobile simulator designed to demonstrate mobile interface design.">
-  <meta property="og:image" content="https://www.yourwebsite.com/pc-simulator-image.jpg">
-  <meta property="og:url" content="https://www.yourwebsite.com/pc-simulator">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PC Simulator">
-  <meta name="twitter:description" content="A mobile simulator designed to demonstrate mobile interface design.">
-  <meta name="twitter:image" content="https://www.yourwebsite.com/pc-simulator-image.jpg">
-  <meta name="twitter:creator" content="@yourtwitterhandle">
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://www.yourwebsite.com/favicon.ico" type="image/x-icon">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>量子占星戒指 - 融合占星玄学与量子力学的伪科学娱乐App</title>
+    <meta name="description" content="量子占星戒指是一款融合占星玄学与量子力学概念的娱乐App，提供掌纹扫描、水逆预警、满月净化和星座配对小游戏等有趣功能，带给您欢乐与放松。">
+    <meta name="keywords" content="量子占星戒指,占星App,伪科学娱乐,水逆预警,掌纹扫描,星座游戏,App,模拟占星">
+    <meta name="author" content="量子占星研究所">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantumring.com/">
+    <meta property="og:title" content="量子占星戒指 - 融合占星玄学与量子力学的伪科学娱乐App">
+    <meta property="og:description" content="探索伪科学的欢乐世界，通过掌纹扫描、水逆预警、满月净化等功能，获得轻松愉快的娱乐体验。">
+    <meta property="og:image" content="https://quantumring.com/img/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://quantumring.com/">
+    <meta property="twitter:title" content="量子占星戒指 - 伪科学娱乐App">
+    <meta property="twitter:description" content="融合占星玄学与量子力学概念的娱乐App，带给您会心一笑的伪科学体验。">
+    <meta property="twitter:image" content="https://quantumring.com/img/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "量子占星戒指",
+      "operatingSystem": "iOS, ANDROID",
+      "applicationCategory": "EntertainmentApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1024"
+      },
+      "description": "量子占星戒指是一款融合占星玄学与量子力学概念的娱乐性产品，通过伪科学梗和互动体验为用户带来乐趣。"
     }
-    gtag('js', new Date());
-    gtag('config', 'UA-XXXXX-Y');
-  </script>
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y) {
-      window.clarity=window.clarity||function(){(clarity.q=clarity.q||[]).push(arguments)};
-      clarity('set', 'anonymizeIP', true);
-      i=l.createElement('script');i.async=1;i.src=r;i.type='text/javascript';
-      t=l.getElementsByTagName('script')[0];t.parentNode.insertBefore(i,t);
-    })(document,window,'script','https://www.clarity.ms/tag/XXXXXX');
-  </script>
-
-  <title>PC Simulator</title>
-
-  <style>
-    /* Global Styles */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    .mobile-container {
-      width: 360px;
-      height: 640px;
-      border: 16px solid black;
-      border-radius: 16px;
-      background-color: #fff;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content {
-      font-size: 1.2rem;
-      color: #333;
-    }
-
-    /* Adjustments for PC */
-    @media (min-width: 768px) {
-      .mobile-container {
-        width: 600px;
-        height: 1000px;
-      }
-
-      .content {
-        font-size: 1.5rem;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .mobile-container {
-        width: 800px;
-        height: 1400px;
-      }
-
-      .content {
-        font-size: 1.8rem;
-      }
-    }
-
-    /* Additional responsiveness for larger screens */
-    @media (min-width: 1200px) {
-      body {
-        justify-content: flex-start;
-      }
-
-      .mobile-container {
-        margin-top: 50px;
-      }
-    }
-  </style>
+    </script>
+    
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --accent: #FF69B4;
+            --sidebar-width: 320px;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #000;
+            color: white;
+        }
+        
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .text-content {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: var(--sidebar-width);
+            height: 100%;
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .sidebar-tab {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(5px);
+            width: 40px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-right: none;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .sidebar:hover {
+            right: 0;
+        }
+        
+        .feature-card {
+            background: rgba(30, 30, 60, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            background: rgba(40, 40, 80, 0.7);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .tag {
+            position: absolute;
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: white;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            z-index: 5;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(138, 43, 226, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .tutorial {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 10, 30, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            z-index: 20;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+        
+        .instructions {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .prediction-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(10, 10, 30, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 16px;
+            z-index: 25;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.5);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .prediction-card.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            }
+        }
+        
+        .spin {
+            animation: spin 15s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .star-icon {
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+            margin: 0 0.25rem;
+        }
+        
+        .card {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            background-color: var(--primary);
+            border-radius: 10px;
+            z-index: 2;
+        }
+        
+        .card-front {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--accent);
+            background-color: var(--primary);
+            border-radius: 10px;
+            z-index: 1;
+        }
+    </style>
 </head>
+<body class="bg-gray-900 text-white overflow-y-auto">
+    <header class="relative py-6">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <svg class="w-10 h-10 mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#8A2BE2" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="35" stroke="#FF69B4" stroke-width="2" stroke-dasharray="10 5"/>
+                    <path d="M50 20V80M20 50H80" stroke="#8A2BE2" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="15" fill="#FF69B4" fill-opacity="0.5"/>
+                </svg>
+                <h1 class="text-2xl font-bold text-content">量子占星戒指</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#features" class="hover:text-pink-300 transition">功能</a></li>
+                    <li><a href="#preview" class="hover:text-pink-300 transition">产品预览</a></li>
+                    <li><a href="#testimonials" class="hover:text-pink-300 transition">用户评价</a></li>
+                    <li>
+                        <select id="language-selector" class="bg-gray-800 text-white rounded px-2 py-1 border border-purple-500">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                        </select>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<body>
-  <div class="mobile-container">
-    <div class="content">
-      <p>Mobile Simulator Screen</p>
-      <p>PC Version: Adjusted for larger screens.</p>
-    </div>
-  </div>
+    <section class="hero relative py-20 overflow-hidden">
+        <div class="stars absolute inset-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-content leading-tight">融合占星玄学与量子力学的<span class="text-pink-400">伪科学</span>奇妙世界</h2>
+                    <p class="text-xl mb-8 text-content text-gray-300">沉浸式3D体验，让你在探索中获得乐趣</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#preview" class="btn-primary">
+                            <i class="fas fa-gem mr-2"></i>
+                            <span>探索产品</span>
+                        </a>
+                        <a href="#app-demo" class="btn-secondary">
+                            <i class="fas fa-mobile-alt mr-2"></i>
+                            <span>尝试App</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="ring-showcase relative w-80 h-80">
+                        <iframe src="apps/base/app/index.html" class="w-full h-full rounded-xl border-4 border-purple-500 shadow-glow"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-star text-pink-400 mr-2"></i>
+                <span>量子占星戒指的神奇功能</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-hand-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">掌纹扫描</h3>
+                    <p class="text-gray-300 text-content">模拟扫描手掌，生成伪科学风格的个性化运势报告，让你会心一笑。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-meteor"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">水逆预警系统</h3>
+                    <p class="text-gray-300 text-content">检测"水星逆行"，提供荒谬的解决方案，如对着镜子跳女团舞化解负能量。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">满月磁场净化</h3>
+                    <p class="text-gray-300 text-content">在满月时激活戒指的"量子净化磁场"功能，通过华丽的视觉效果净化负能量。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-book-dead"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">护身符投影</h3>
+                    <p class="text-gray-300 text-content">随机生成"古老护身符"图案，在3D空间中投射出复杂的神秘符文，具有绚丽光效。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">星座配对小游戏</h3>
+                    <p class="text-gray-300 text-content">趣味翻牌记忆类游戏，匹配相同的星座符号，带来休闲娱乐体验。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-content">3D互动体验</h3>
+                    <p class="text-gray-300 text-content">通过鼠标拖拽旋转查看戒指详情，享受沉浸式的3D交互体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="preview" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-mobile-alt text-pink-400 mr-2"></i>
+                <span>App 预览</span>
+            </h2>
+            
+            <!-- 基础风格预览 -->
+            <div class="ui-style-preview mb-20">
+                <h3 class="text-2xl font-bold mb-6 text-content text-center">
+                    <span class="text-purple-400">基础风格</span> - 量子星空主题
+                </h3>
+                <p class="text-center mb-8 max-w-3xl mx-auto text-gray-300">
+                    深邃的星空背景与闪耀粒子，打造神秘占星氛围，紫色与粉色的渐变营造超自然体验。
+                </p>
+                <div class="app-showcase flex flex-wrap justify-center gap-6">
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/index.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">首页</p>
+                    </div>
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/palm-scan.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">掌纹扫描</p>
+                    </div>
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/zodiac-game.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">星座小游戏</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex flex-wrap justify-center gap-6">
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/mercury.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">水逆预警</p>
+                    </div>
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/moon.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">满月净化</p>
+                    </div>
+                    <div class="app-device">
+                        <div class="device-frame">
+                            <iframe src="apps/base/app/talisman.html" class="device-screen"></iframe>
+                        </div>
+                        <p class="text-center mt-3 text-sm text-gray-400">护身符投影</p>
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <a href="apps/base/onboarding-preview/index.html" class="btn-secondary inline-flex items-center" target="_blank">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        <span>查看完整Onboarding流程</span>
+                    </a>
+                    <a href="apps/base/paywall-preview/index.html" class="btn-secondary inline-flex items-center ml-4" target="_blank">
+                        <i class="fas fa-lock mr-2"></i>
+                        <span>查看Paywall界面</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 未来风格预览 - 只是示例，实际上这部分内容需要在真实项目中进行实现 -->
+            <div class="ui-style-preview">
+                <h3 class="text-2xl font-bold mb-6 text-content text-center">
+                    <span class="text-teal-400">科技风格</span> - 未来量子界面
+                </h3>
+                <p class="text-center mb-8 max-w-3xl mx-auto text-gray-300">
+                    未来感界面设计，霓虹蓝色调与全息投影效果，展现高科技量子力学概念。
+                </p>
+                <div class="flex justify-center">
+                    <div class="bg-gray-700 p-4 rounded-lg text-center">
+                        <p class="text-yellow-300 mb-3"><i class="fas fa-exclamation-triangle mr-2"></i>敬请期待</p>
+                        <p class="text-gray-400">科技风格界面正在开发中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-comment-dots text-pink-400 mr-2"></i>
+                <span>用户评价</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-12 h-12 rounded-full mr-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="40" r="25" fill="#A0AEC0"/>
+                            <circle cx="50" cy="100" r="40" fill="#A0AEC0"/>
+                        </svg>
+                        <div>
+                            <h4 class="font-semibold text-content">林小梦</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-content">
+                        "水逆预警系统太有趣了！按照建议在镜子前跳了女团舞，室友笑到岔气，但奇怪的是那天确实过得特别顺利。"
+                    </p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-12 h-12 rounded-full mr-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="40" r="25" fill="#A0AEC0"/>
+                            <circle cx="50" cy="100" r="40" fill="#A0AEC0"/>
+                        </svg>
+                        <div>
+                            <h4 class="font-semibold text-content">张星辰</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-content">
+                        "星座配对小游戏让我和朋友玩得停不下来，3D效果很炫酷，护身符投影功能也很有新意。"
+                    </p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-12 h-12 rounded-full mr-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="40" r="25" fill="#A0AEC0"/>
+                            <circle cx="50" cy="100" r="40" fill="#A0AEC0"/>
+                        </svg>
+                        <div>
+                            <h4 class="font-semibold text-content">王量子</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-content">
+                        "作为物理系学生，这款产品让我笑到肚子痛。把量子力学和占星学结合得如此荒诞，反而特别解压，推荐给需要减压的理科生！"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trust-indicators" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-shield-alt text-pink-400 mr-2"></i>
+                <span>为什么选择量子占星戒指？</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="trust-card bg-opacity-30 bg-purple-900 rounded-lg p-6 transform transition-all hover:translate-y-(-4px) hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-users text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">10,000+ 满意用户</h3>
+                    </div>
+                    <p class="text-gray-300">全球已有超过10,000名用户使用量子占星戒指，探索伪科学的奇妙体验，获得欢乐与放松。</p>
+                </div>
+                <div class="trust-card bg-opacity-30 bg-purple-900 rounded-lg p-6 transform transition-all hover:translate-y-(-4px) hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-shield-alt text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">安全有趣的体验</h3>
+                    </div>
+                    <p class="text-gray-300">我们严格确保所有功能纯属娱乐，没有任何科学依据或医疗效果。所有"预测"均随机生成，提供有趣体验的同时不误导用户。</p>
+                </div>
+                <div class="trust-card bg-opacity-30 bg-purple-900 rounded-lg p-6 transform transition-all hover:translate-y-(-4px) hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-code text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">专业技术支持</h3>
+                    </div>
+                    <p class="text-gray-300">我们的技术团队确保App流畅运行，定期更新内容和功能，为用户提供持续优质的娱乐体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-microscope text-pink-400 mr-2"></i>
+                <span>我们的创作理念</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-10">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-400">融合科学与娱乐的艺术</h3>
+                    <p class="mb-6 text-gray-300">量子占星戒指通过创造性地融合量子力学与占星学的概念，打造了一个纯粹娱乐性的数字体验。我们精心设计了每一个功能，确保它们既有趣又不误导用户。</p>
+                    <p class="mb-6 text-gray-300">在设计过程中，我们咨询了物理学教授和心理学专家，确保我们的产品在提供娱乐的同时，也能引发用户对伪科学现象的批判性思考。</p>
+                    <div class="flex items-center p-4 bg-purple-900 bg-opacity-30 rounded-lg">
+                        <i class="fas fa-quote-left text-pink-400 text-3xl mr-4"></i>
+                        <p class="italic">"量子占星戒指巧妙地将科学术语与占星概念混搭，创造出一种令人会心一笑的娱乐体验，这种创意方式可以帮助人们在放松之余，思考科学与伪科学的界限。" — 李教授，物理学家</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="research-image bg-gradient-to-r from-purple-900 to-pink-900 p-1 rounded-lg shadow-glow">
+                        <div class="bg-gray-900 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-4 text-center text-pink-400">我们的创作原则</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center mr-3 mt-1">
+                                        <span class="text-white text-xs">1</span>
+                                    </div>
+                                    <p>纯娱乐性：所有功能和预测均为随机生成，无任何科学依据</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center mr-3 mt-1">
+                                        <span class="text-white text-xs">2</span>
+                                    </div>
+                                    <p>透明度：明确告知用户产品性质，不宣称任何超自然能力</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center mr-3 mt-1">
+                                        <span class="text-white text-xs">3</span>
+                                    </div>
+                                    <p>创意优先：通过有趣的视觉和互动体验激发用户想象力</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center mr-3 mt-1">
+                                        <span class="text-white text-xs">4</span>
+                                    </div>
+                                    <p>社交体验：设计支持社交分享的功能，增强用户之间的互动</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-question-circle text-pink-400 mr-2"></i>
+                <span>常见问题解答</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">量子占星戒指是真的能预测未来吗？</h3>
+                    <p class="text-gray-300">不能，量子占星戒指是一款纯娱乐性产品，所有的"预测"和"分析"都是随机生成的，没有任何科学依据。我们创造这款产品的目的是为用户带来乐趣，而非提供真实的预测服务。</p>
+                </div>
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">App内的掌纹扫描功能是如何工作的？</h3>
+                    <p class="text-gray-300">掌纹扫描是一个模拟功能，它并不真正分析您的掌纹。当您使用此功能时，App会展示一个视觉效果的扫描动画，然后从预设的娱乐性内容库中随机生成一份"运势报告"。</p>
+                </div>
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">量子占星戒指App是否收集用户个人数据？</h3>
+                    <p class="text-gray-300">量子占星戒指App只收集基本的使用数据以改善用户体验，不会收集或分析用户的个人信息。所有生成的"预测"内容存储在本地设备上，不会上传到我们的服务器。</p>
+                </div>
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">免费版和付费版有什么区别？</h3>
+                    <p class="text-gray-300">免费版提供基本功能体验，包括简化版的掌纹扫描和星座小游戏。付费版解锁全部高级功能，如高级掌纹分析、水逆预警系统高级版、满月能量充能和100+种护身符图案，同时移除广告。</p>
+                </div>
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">App是否适合儿童使用？</h3>
+                    <p class="text-gray-300">量子占星戒指App设计用于成年人娱乐。虽然内容没有不适宜元素，但应用的概念和幽默可能更适合成年人理解和欣赏。我们建议13岁以下儿童在家长指导下使用。</p>
+                </div>
+                <div class="faq-item bg-opacity-30 bg-purple-900 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-pink-300">如何取消订阅？</h3>
+                    <p class="text-gray-300">您可以随时通过App Store或Google Play商店的订阅管理页面取消订阅。取消后，您可以继续使用付费功能直到当前订阅期结束，之后将自动切换到免费版本。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="user-stories" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16 text-content">
+                <i class="fas fa-heart text-pink-400 mr-2"></i>
+                <span>用户体验故事</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <div class="user-story relative">
+                    <div class="absolute -top-6 -left-6 w-16 h-16 rounded-full overflow-hidden border-4 border-purple-500">
+                        <svg viewBox="0 0 100 100" class="w-full h-full bg-gray-700">
+                            <circle cx="50" cy="35" r="25" fill="#A0AEC0"/>
+                            <circle cx="50" cy="95" r="35" fill="#A0AEC0"/>
+                        </svg>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-900 to-pink-900 p-1 rounded-lg">
+                        <div class="bg-gray-900 p-6 rounded-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-pink-300">陈小明 - 软件工程师</h3>
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="mb-4 text-gray-300">"作为一名工程师，我每天面对的都是严谨的代码和逻辑。量子占星戒指给了我一个完全不同的空间，让我能够暂时逃离现实，笑对那些荒诞的'科学'解释。特别是水逆预警功能，真的太有创意了！"</p>
+                            <p class="text-sm text-gray-400 italic">"最喜欢的功能：水逆预警系统和满月净化"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-story relative">
+                    <div class="absolute -top-6 -left-6 w-16 h-16 rounded-full overflow-hidden border-4 border-purple-500">
+                        <svg viewBox="0 0 100 100" class="w-full h-full bg-gray-700">
+                            <circle cx="50" cy="35" r="25" fill="#A0AEC0"/>
+                            <circle cx="50" cy="95" r="35" fill="#A0AEC0"/>
+                        </svg>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-900 to-pink-900 p-1 rounded-lg">
+                        <div class="bg-gray-900 p-6 rounded-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-pink-300">王晓雨 - 大学讲师</h3>
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <p class="mb-4 text-gray-300">"我在课堂上用量子占星戒指作为例子，向学生们展示如何批判性地思考伪科学现象。令人惊讶的是，这个App成了我最受欢迎的教学工具之一！学生们在笑声中更好地理解了科学与伪科学的区别。"</p>
+                            <p class="text-sm text-gray-400 italic">"最喜欢的功能：掌纹扫描和星座小游戏"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#testimonials" class="btn-secondary inline-flex items-center">
+                    <i class="fas fa-comments mr-2"></i>
+                    <span>查看更多用户评价</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="py-20 bg-gray-800 relative overflow-hidden">
+        <div class="stars absolute inset-0 opacity-30"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6 text-content">
+                    立即开启你的量子占星之旅
+                </h2>
+                <p class="text-xl mb-10 text-gray-300">下载App，探索伪科学的欢乐世界</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="btn-primary">
+                        <i class="fab fa-apple mr-2"></i>
+                        <span>App Store</span>
+                    </a>
+                    <a href="#" class="btn-primary">
+                        <i class="fab fa-google-play mr-2"></i>
+                        <span>Google Play</span>
+                    </a>
+                </div>
+                <p class="mt-6 text-sm text-gray-400">* 本产品纯属娱乐，不具有任何科学依据或医疗效果</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 py-10 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" stroke="#8A2BE2" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="35" stroke="#FF69B4" stroke-width="2" stroke-dasharray="10 5"/>
+                            <path d="M50 20V80M20 50H80" stroke="#8A2BE2" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="15" fill="#FF69B4" fill-opacity="0.5"/>
+                        </svg>
+                        <span class="text-xl font-bold text-content">量子占星戒指</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2 text-content">
+                        2023 量子占星研究所. 保留所有权利.
+                    </p>
+                    <p class="text-xs text-gray-500 mt-2">
+                        * 免责声明：本产品纯属娱乐，不具有任何科学依据或医疗效果
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">产品信息</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-pink-400 transition">核心功能</a></li>
+                        <li><a href="#preview" class="hover:text-pink-400 transition">App预览</a></li>
+                        <li><a href="#faq" class="hover:text-pink-400 transition">常见问题</a></li>
+                        <li><a href="#research" class="hover:text-pink-400 transition">创作理念</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">用户支持</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-pink-400 transition">使用指南</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">技术支持</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">隐私政策</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">服务条款</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">联系我们</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-envelope w-5 text-pink-400"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3d4e484d4d524f497d4c485c534948504f54535a135e5250">[email&#160;protected]</a></li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-pink-400"></i> 上海市浦东新区张江高科技园区</li>
+                    </ul>
+                    <div class="mt-4">
+                        <h4 class="text-sm font-semibold mb-2 text-white">关注我们</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-pink-400 transition">
+                                <i class="fab fa-weibo text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-pink-400 transition">
+                                <i class="fab fa-weixin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-pink-400 transition">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-pink-400 transition">
+                                <i class="fab fa-tiktok text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
+                量子占星戒指 - 融合占星玄学与量子力学概念的娱乐App | 伪科学梗 | 掌纹分析 | 星座游戏 | 水逆预警
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // ... existing code ...
+    </script>
 </body>
-
 </html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>量子占星戒指App</title>
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <!-- iOS Status Bar -->
+    <div class="ios-status-bar">
+        <div class="status-bar-content">
+            <span class="time">20:42</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="stars-bg"></div>
+        
+        <div class="app-content">
+            <header class="app-header">
+                <div class="logo-area">
+                    <svg class="quantum-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" stroke="#8A2BE2" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="35" stroke="#FF69B4" stroke-width="2" stroke-dasharray="10 5"/>
+                        <path d="M50 20V80M20 50H80" stroke="#8A2BE2" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="15" fill="#FF69B4" fill-opacity="0.5"/>
+                    </svg>
+                    <h1 class="app-title">量子占星戒指</h1>
+                </div>
+                <div class="user-profile">
+                    <div class="profile-circle">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="ring-showcase">
+                <div class="quantum-particles" id="quantum-particles"></div>
+                <div class="quantum-ring" id="quantum-ring">
+                    <!-- Ring 3D Model will be rendered here -->
+                    <div class="ring-placeholder">
+                        <div class="ring-circle"></div>
+                        <div class="gem"></div>
+                    </div>
+                </div>
+                <div class="interaction-hint">
+                    <i class="fas fa-hand-pointer"></i>
+                    <span>拖动旋转戒指</span>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item" onclick="location.href='palm-scan.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-sparkles"></i>
+                    </div>
+                    <span class="feature-name">掌纹扫描</span>
+                </div>
+                <div class="feature-item" onclick="location.href='mercury.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-meteor"></i>
+                    </div>
+                    <span class="feature-name">水逆预警</span>
+                </div>
+                <div class="feature-item" onclick="location.href='moon.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <span class="feature-name">满月净化</span>
+                </div>
+                <div class="feature-item" onclick="location.href='talisman.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-dead"></i>
+                    </div>
+                    <span class="feature-name">护身符投影</span>
+                </div>
+                <div class="feature-item" onclick="location.href='zodiac-game.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <span class="feature-name">星座小游戏</span>
+                </div>
+                <div class="feature-item" onclick="location.href='settings.html'">
+                    <div class="feature-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <span class="feature-name">设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Bottom Navigation Bar -->
+        <div class="ios-tab-bar">
+            <div class="tab-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-star"></i>
+                <span>功能</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-history"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update the time in the status bar
+            updateStatusBarTime();
+            
+            // Initialize particles
+            initQuantumParticles();
+        });
+        
+        // Update the time in the status bar
+        function updateStatusBarTime() {
+            const timeElement = document.querySelector('.time');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}`;
+                
+                // Update every minute
+                setTimeout(updateStatusBarTime, 60000);
+            }
+        }
+        
+        // Initialize quantum particle effect
+        function initQuantumParticles() {
+            const particlesContainer = document.getElementById('quantum-particles');
+            if (!particlesContainer) return;
+            
+            // Create quantum particles
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                createParticle(particlesContainer);
+            }
+        }
+
+        // Create a single quantum particle
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'quantum-particle';
+            
+            // Random properties
+            const size = 2 + Math.random() * 4;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const delay = Math.random() * 5;
+            const duration = 5 + Math.random() * 10;
+            
+            // Apply styles
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.backgroundColor = Math.random() > 0.5 ? '#8A2BE2' : '#FF69B4';
+            particle.style.opacity = 0.5 + Math.random() * 0.5;
+            particle.style.animation = `floatParticle ${duration}s ease-in-out ${delay}s infinite alternate`;
+            
+            // Append to container
+            container.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

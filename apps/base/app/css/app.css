@@ -1,0 +1,292 @@
+:root {
+    --primary: #8A2BE2;
+    --accent: #FF69B4;
+    --bg-dark: #0D1117;
+    --bg-dark-transparent: rgba(13, 17, 23, 0.9);
+    --bg-medium: #161B22;
+    --text-light: #F0F6FC;
+    --text-medium: #C9D1D9;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* App Container */
+.app-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stars Background */
+.stars-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23404' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23505'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(circle, #11063D 0%, #0D1117 70%);
+    z-index: -1;
+    opacity: 0.8;
+    animation: starsAnimation 100s linear infinite;
+}
+
+@keyframes starsAnimation {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+/* iOS Status Bar */
+.ios-status-bar {
+    height: 44px;
+    width: 100%;
+    background-color: var(--bg-dark-transparent);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.status-bar-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time {
+    font-weight: 600;
+}
+
+.status-icons {
+    display: flex;
+    gap: 8px;
+}
+
+/* App Content */
+.app-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* App Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.quantum-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+}
+
+.app-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Ring Showcase */
+.ring-showcase {
+    position: relative;
+    height: 300px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.quantum-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.quantum-ring {
+    position: relative;
+    z-index: 1;
+}
+
+.ring-placeholder {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ring-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 15px solid #222;
+    position: relative;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+    background: linear-gradient(135deg, #333, #111);
+}
+
+.gem {
+    position: absolute;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    transform: rotate(45deg);
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+    animation: gemGlow 3s infinite alternate;
+}
+
+@keyframes gemGlow {
+    0% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.6); }
+    100% { box-shadow: 0 0 30px rgba(255, 105, 180, 0.9); }
+}
+
+.interaction-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.8;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.feature-item {
+    background: rgba(30, 30, 60, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.feature-item:hover, .feature-item:active {
+    transform: translateY(-5px);
+    border-color: rgba(255, 105, 180, 0.5);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    color: white;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+}
+
+.feature-name {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* iOS Tab Bar */
+.ios-tab-bar {
+    height: 83px;
+    width: 100%;
+    background-color: var(--bg-dark-transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px; /* For iPhone home indicator */
+}
+
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 10px 0;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.tab-item.active {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.tab-item i {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.tab-item span {
+    font-size: 0.7rem;
+}

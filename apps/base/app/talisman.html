@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>护身符投影 - 量子占星戒指App</title>
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        .talisman-container {
+            position: relative;
+            height: 350px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .talisman-visual {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .talisman-frame {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .talisman-symbol {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .talisman-symbol.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .ring-visual {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transform: rotate(45deg);
+            bottom: 0;
+            left: 50%;
+            margin-left: -20px;
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+        }
+        
+        .light-beam {
+            position: absolute;
+            width: 60px;
+            height: 100px;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+            top: 0;
+            left: 50%;
+            margin-left: -30px;
+            transform-origin: center bottom;
+            transform: scaleY(0);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+        
+        .light-beam.active {
+            transform: scaleY(1);
+            opacity: 0.6;
+        }
+        
+        .talisman-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .talisman-particles.active {
+            opacity: 1;
+        }
+        
+        .talisman-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #FFF;
+            border-radius: 50%;
+        }
+        
+        .project-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .project-btn:hover, .project-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        .project-btn i {
+            margin-right: 8px;
+        }
+        
+        .result-card {
+            background: rgba(30, 30, 60, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            max-width: 90%;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: none;
+        }
+        
+        .result-card.show {
+            transform: scale(1);
+            opacity: 1;
+            display: block;
+        }
+        
+        .result-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            color: var(--accent);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .result-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .talisman-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .talisman-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 10px;
+        }
+        
+        .talisman-info-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(138, 43, 226, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: white;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- iOS Status Bar -->
+    <div class="ios-status-bar">
+        <div class="status-bar-content">
+            <span class="time">20:42</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="stars-bg"></div>
+        
+        <div class="app-content">
+            <header class="app-header">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="app-title">护身符投影</h1>
+                <div class="spacer" style="width: 24px;"></div>
+            </header>
+            
+            <div class="talisman-container">
+                <div class="talisman-visual" id="talisman-visual">
+                    <div class="talisman-frame">
+                        <svg class="talisman-symbol" id="talisman-symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Talisman symbol will be set by JavaScript -->
+                        </svg>
+                    </div>
+                    <div class="light-beam" id="light-beam"></div>
+                    <div class="ring-visual"></div>
+                    <div class="talisman-particles" id="talisman-particles"></div>
+                </div>
+                
+                <button class="project-btn" id="project-btn">
+                    <i class="fas fa-book-dead"></i>
+                    投影护身符
+                </button>
+            </div>
+            
+            <div class="result-card" id="result-card">
+                <h2 class="result-title">护身符已投影</h2>
+                
+                <div class="result-content">
+                    成功投影古老护身符"<span id="talisman-name">守护之眼</span>"。该护身符据说具有以下神秘力量（仅供娱乐）：
+                </div>
+                
+                <div class="talisman-info">
+                    <div class="talisman-info-item">
+                        <div class="talisman-info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="talisman-info-text">
+                            <strong>起源：</strong><span id="talisman-origin">古埃及文明，公元前2500年</span>
+                        </div>
+                    </div>
+                    
+                    <div class="talisman-info-item">
+                        <div class="talisman-info-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <div class="talisman-info-text">
+                            <strong>能量：</strong><span id="talisman-power">据说能抵御负面能量、增强直觉、促进内心平静</span>
+                        </div>
+                    </div>
+                    
+                    <div class="talisman-info-item">
+                        <div class="talisman-info-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="talisman-info-text">
+                            <strong>使用建议：</strong><span id="talisman-usage">将此图案置于办公桌或床头，在面临决策时凝视片刻</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-6">
+                    <p class="text-sm text-gray-400 mb-4">* 护身符效果纯属娱乐，请勿当真</p>
+                    <button class="project-btn" id="reproject-btn">
+                        <i class="fas fa-redo"></i>
+                        投影新护身符
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Bottom Navigation Bar -->
+        <div class="ios-tab-bar">
+            <div class="tab-item" onclick="location.href='index.html'">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item active">
+                <i class="fas fa-star"></i>
+                <span>功能</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-history"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update the time in the status bar
+            updateStatusBarTime();
+            
+            // Set up projection button functionality
+            const projectBtn = document.getElementById('project-btn');
+            const reprojectBtn = document.getElementById('reproject-btn');
+            const talismanVisual = document.getElementById('talisman-visual');
+            const talismanSymbol = document.getElementById('talisman-symbol');
+            const lightBeam = document.getElementById('light-beam');
+            const talismanParticles = document.getElementById('talisman-particles');
+            const resultCard = document.getElementById('result-card');
+            const talismanName = document.getElementById('talisman-name');
+            const talismanOrigin = document.getElementById('talisman-origin');
+            const talismanPower = document.getElementById('talisman-power');
+            const talismanUsage = document.getElementById('talisman-usage');
+            
+            // Predefined talismans
+            const talismans = [
+                {
+                    name: "守护之眼",
+                    origin: "古埃及文明，公元前2500年",
+                    power: "据说能抵御负面能量、增强直觉、促进内心平静",
+                    usage: "将此图案置于办公桌或床头，在面临决策时凝视片刻",
+                    symbol: `<circle cx="100" cy="100" r="60" fill="none" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255, 105, 180, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="20" fill="rgba(255, 105, 180, 0.3)" />
+                            <circle cx="100" cy="100" r="10" fill="rgba(138, 43, 226, 0.8)" />
+                            <path d="M100 40 L100 160 M40 100 L160 100" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />`
+                },
+                {
+                    name: "平衡之轮",
+                    origin: "中世纪欧洲炼金术士，公元1200年",
+                    power: "据说能平衡情绪、消除压力、增强睡眠质量",
+                    usage: "在压力大的时刻，闭眼想象此符号旋转，有助于放松",
+                    symbol: `<circle cx="100" cy="100" r="60" fill="none" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <path d="M100 40 A60 60 0 0 0 40 100 A60 60 0 0 0 100 160 A60 60 0 0 0 160 100 A60 60 0 0 0 100 40 Z" fill="none" stroke="rgba(255, 105, 180, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="70" r="10" fill="rgba(138, 43, 226, 0.8)" />
+                            <circle cx="100" cy="130" r="10" fill="rgba(255, 105, 180, 0.8)" />`
+                },
+                {
+                    name: "星辰之纹",
+                    origin: "古巴比伦天文学家，公元前700年",
+                    power: "据说能增强决策能力、提升创造力、带来好运",
+                    usage: "在开始新项目前观想此符号，据信有助于清晰思考",
+                    symbol: `<polygon points="100,40 115,85 165,85 125,115 140,160 100,130 60,160 75,115 35,85 85,85" fill="none" stroke="rgba(255, 105, 180, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="30" fill="none" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="10" fill="rgba(138, 43, 226, 0.5)" />`
+                },
+                {
+                    name: "智慧之树",
+                    origin: "北欧维京时代，公元800年",
+                    power: "据说能提升智慧、增强思考能力、防止健忘",
+                    usage: "在学习工作前观看此符号，据说能提高专注力",
+                    symbol: `<path d="M100 40 L100 160" stroke="rgba(138, 43, 226, 0.8)" stroke-width="3" />
+                            <path d="M70 70 L130 70" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <path d="M60 100 L140 100" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <path d="M70 130 L130 130" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="70" r="5" fill="rgba(255, 105, 180, 0.8)" />
+                            <circle cx="100" cy="100" r="5" fill="rgba(255, 105, 180, 0.8)" />
+                            <circle cx="100" cy="130" r="5" fill="rgba(255, 105, 180, 0.8)" />`
+                },
+                {
+                    name: "命运之网",
+                    origin: "美洲原住民，公元前200年",
+                    power: "据说能引导命运、展现未来道路、避免迷失方向",
+                    usage: "在做重要决定前冥想此符号，据说能获得内心指引",
+                    symbol: `<circle cx="100" cy="100" r="60" fill="none" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" />
+                            <path d="M60 60 L140 140 M140 60 L60 140" stroke="rgba(255, 105, 180, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255, 105, 180, 0.8)" stroke-width="2" />
+                            <circle cx="100" cy="100" r="5" fill="rgba(138, 43, 226, 0.8)" />
+                            <circle cx="60" cy="60" r="5" fill="rgba(255, 105, 180, 0.5)" />
+                            <circle cx="140" cy="60" r="5" fill="rgba(255, 105, 180, 0.5)" />
+                            <circle cx="60" cy="140" r="5" fill="rgba(255, 105, 180, 0.5)" />
+                            <circle cx="140" cy="140" r="5" fill="rgba(255, 105, 180, 0.5)" />`
+                }
+            ];
+            
+            // Create particles
+            createParticles(30);
+            
+            projectBtn.addEventListener('click', function() {
+                // Start projection animation
+                projectBtn.style.display = 'none';
+                
+                // Activate light beam
+                lightBeam.classList.add('active');
+                
+                // Select random talisman
+                const randomTalisman = talismans[Math.floor(Math.random() * talismans.length)];
+                
+                // Set talisman symbol
+                talismanSymbol.innerHTML = randomTalisman.symbol;
+                
+                // Update talisman info
+                talismanName.textContent = randomTalisman.name;
+                talismanOrigin.textContent = randomTalisman.origin;
+                talismanPower.textContent = randomTalisman.power;
+                talismanUsage.textContent = randomTalisman.usage;
+                
+                // Activate particles
+                setTimeout(() => {
+                    talismanParticles.classList.add('active');
+                }, 500);
+                
+                // Show talisman symbol
+                setTimeout(() => {
+                    talismanSymbol.classList.add('show');
+                }, 1000);
+                
+                // Show results after projection animation
+                setTimeout(() => {
+                    resultCard.classList.add('show');
+                }, 2500);
+            });
+            
+            // Reset projection
+            reprojectBtn.addEventListener('click', function() {
+                resultCard.classList.remove('show');
+                
+                // Reset elements for a new projection
+                setTimeout(() => {
+                    // Hide talisman symbol
+                    talismanSymbol.classList.remove('show');
+                    
+                    // Deactivate light beam and particles
+                    setTimeout(() => {
+                        lightBeam.classList.remove('active');
+                        talismanParticles.classList.remove('active');
+                        
+                        // Show project button again
+                        setTimeout(() => {
+                            projectBtn.style.display = 'inline-flex';
+                        }, 500);
+                    }, 500);
+                }, 500);
+            });
+            
+            // Create particle elements
+            function createParticles(count) {
+                for(let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'talisman-particle';
+                    
+                    // Random size
+                    const size = 2 + Math.random() * 3;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random position
+                    const x = Math.random() * 200;
+                    const y = Math.random() * 200;
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    
+                    // Random color
+                    const color = Math.random() > 0.5 ? 
+                                    'rgba(138, 43, 226, 0.8)' : 
+                                    'rgba(255, 105, 180, 0.8)';
+                    particle.style.backgroundColor = color;
+                    
+                    // Custom properties for animation
+                    const tx = (Math.random() - 0.5) * 30;
+                    const ty = (Math.random() - 0.5) * 30;
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    // Animation
+                    const duration = 1 + Math.random() * 3;
+                    particle.style.animation = `floatParticle ${duration}s ease-in-out infinite alternate`;
+                    
+                    talismanParticles.appendChild(particle);
+                }
+            }
+        });
+        
+        // Update the time in the status bar
+        function updateStatusBarTime() {
+            const timeElement = document.querySelector('.time');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}`;
+                
+                // Update every minute
+                setTimeout(updateStatusBarTime, 60000);
+            }
+        }
+    </script>
+</body>
+</html>

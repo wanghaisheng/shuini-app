@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掌纹扫描 - 量子占星戒指App</title>
+    <link href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        .palm-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .palm-outline {
+            width: 200px;
+            height: 250px;
+            border: 2px dashed rgba(255, 105, 180, 0.6);
+            border-radius: 100px 100px 0 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scan-animation {
+            position: absolute;
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            top: 0;
+            animation: scanMove 3s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .scan-line {
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: scanLine 1.5s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .palm-icon {
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .scan-instruction {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .scan-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .scan-btn:hover, .scan-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        .scan-btn i {
+            margin-right: 8px;
+        }
+        
+        .result-card {
+            background: rgba(30, 30, 60, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            max-width: 90%;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: none;
+        }
+        
+        .result-card.show {
+            transform: scale(1);
+            opacity: 1;
+            display: block;
+        }
+        
+        .result-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            color: var(--accent);
+        }
+        
+        .result-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .result-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 10px;
+        }
+        
+        .result-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .progress-container {
+            width: 90%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 30px auto;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            transition: width 3s ease-in-out;
+        }
+        
+        @keyframes scanMove {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes scanLine {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- iOS Status Bar -->
+    <div class="ios-status-bar">
+        <div class="status-bar-content">
+            <span class="time">20:42</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="stars-bg"></div>
+        
+        <div class="app-content">
+            <header class="app-header">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="app-title">掌纹扫描</h1>
+                <div class="spacer" style="width: 24px;"></div>
+            </header>
+            
+            <div class="palm-container">
+                <div class="palm-outline" id="palm-outline">
+                    <i class="fas fa-hand-paper palm-icon"></i>
+                    <div class="scan-animation" id="scan-animation"></div>
+                    <div class="scan-line" id="scan-line"></div>
+                </div>
+                
+                <div class="scan-instruction" id="scan-instruction">
+                    <p>将手掌放在屏幕上进行扫描</p>
+                </div>
+                
+                <button class="scan-btn" id="scan-btn">
+                    <i class="fas fa-hand-sparkles"></i>
+                    开始扫描
+                </button>
+                
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+            
+            <div class="result-card" id="result-card">
+                <h2 class="result-title">你的量子掌纹分析结果</h2>
+                
+                <div class="result-content">
+                    根据量子星场计算，你的掌纹展示了以下特质：
+                </div>
+                
+                <div class="result-items">
+                    <div class="result-item">
+                        <div class="result-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="result-text">
+                            <strong>感情观：</strong>浪漫主义者，偏好长期稳定关系，潜在桃花位于东北方向
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="result-text">
+                            <strong>事业线：</strong>具有创新思维，适合创意领域，财运将在下个水逆后好转
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="result-text">
+                            <strong>性格特质：</strong>细腻敏感，高度自律，偶尔过度思考，适合养一盆多肉植物平衡能量
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-6">
+                    <p class="text-sm text-gray-400 mb-4">* 结果仅供娱乐，请勿当真</p>
+                    <button class="scan-btn" id="rescan-btn">
+                        <i class="fas fa-redo"></i>
+                        重新扫描
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- iOS Bottom Navigation Bar -->
+        <div class="ios-tab-bar">
+            <div class="tab-item" onclick="location.href='index.html'">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item active">
+                <i class="fas fa-star"></i>
+                <span>功能</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-history"></i>
+                <span>历史</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update the time in the status bar
+            updateStatusBarTime();
+            
+            // Set up scan button functionality
+            const scanBtn = document.getElementById('scan-btn');
+            const rescanBtn = document.getElementById('rescan-btn');
+            const palmOutline = document.getElementById('palm-outline');
+            const scanAnimation = document.getElementById('scan-animation');
+            const scanLine = document.getElementById('scan-line');
+            const scanInstruction = document.getElementById('scan-instruction');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const resultCard = document.getElementById('result-card');
+            
+            scanBtn.addEventListener('click', function() {
+                // Start scanning animation
+                scanAnimation.style.opacity = '1';
+                scanLine.style.opacity = '1';
+                scanBtn.style.display = 'none';
+                scanInstruction.innerHTML = '<p>正在扫描中，请保持手掌稳定...</p>';
+                progressContainer.style.display = 'block';
+                
+                // Simulate progress
+                setTimeout(() => {
+                    progressBar.style.width = '30%';
+                }, 300);
+                
+                setTimeout(() => {
+                    progressBar.style.width = '60%';
+                }, 1500);
+                
+                setTimeout(() => {
+                    progressBar.style.width = '100%';
+                }, 2500);
+                
+                // Show results after scan animation
+                setTimeout(() => {
+                    scanAnimation.style.opacity = '0';
+                    scanLine.style.opacity = '0';
+                    scanInstruction.innerHTML = '<p>扫描完成！</p>';
+                    progressContainer.style.display = 'none';
+                    
+                    // Show results
+                    setTimeout(() => {
+                        resultCard.classList.add('show');
+                    }, 500);
+                }, 3000);
+            });
+            
+            // Reset scan
+            rescanBtn.addEventListener('click', function() {
+                resultCard.classList.remove('show');
+                
+                // Reset elements for a new scan
+                setTimeout(() => {
+                    scanBtn.style.display = 'inline-flex';
+                    scanInstruction.innerHTML = '<p>将手掌放在屏幕上进行扫描</p>';
+                    progressBar.style.width = '0%';
+                }, 500);
+            });
+        });
+        
+        // Update the time in the status bar
+        function updateStatusBarTime() {
+            const timeElement = document.querySelector('.time');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeElement.textContent = `${hours}:${minutes}`;
+                
+                // Update every minute
+                setTimeout(updateStatusBarTime, 60000);
+            }
+        }
+    </script>
+</body>
+</html>
